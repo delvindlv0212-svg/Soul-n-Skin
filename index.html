@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul&Skin | Skin Analyzer AI</title>
+    <meta name="description"
+        content="Analisis jenis kulit Anda secara cerdas dengan fitur kamera pengenal wajah modern. Dapatkan rekomendasi skincare terbaik.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Botanical Motifs -->
+    <svg class="botanical-motif motif-1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#8BB197"
+            d="M50 0 C70 30, 90 40, 90 70 C90 90, 70 100, 50 100 C30 100, 10 90, 10 70 C10 40, 30 30, 50 0 Z" />
+    </svg>
+    <svg class="botanical-motif motif-2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#C8D5B9" d="M10 50 C20 20, 50 10, 80 10 C90 40, 80 70, 50 90 C20 70, 0 80, 10 50 Z" />
+    </svg>
+
+    <main class="app-container">
+
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">Soul&Skin.</div>
+            <p class="subtitle">Be aware, be present, love your skin from within.</p>
+        </header>
+
+        <!-- View 1: Landing / Intro -->
+        <section id="view-intro" class="view-section active">
+            <div class="glass-card text-center">
+                <div class="icon-wrapper">✨</div>
+                <h1>Kenali Jenis Kulitmu</h1>
+                <p>Gunakan kamera Anda untuk memindai wajah dan temukan rutinitas perawatan kulit yang paling cocok
+                    dengan jenis kulit Anda dalam hitungan detik.</p>
+                <button id="btn-start" class="btn-primary">Mulai Analisis <svg width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg></button>
+                <div class="upload-wrapper" style="margin-top: 1rem;">
+                    <input type="file" id="image-upload" accept="image/*" class="hidden">
+                    <button id="btn-upload" class="btn-secondary">Atau Upload dari Galeri</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- View 2: Camera Scanner -->
+        <section id="view-scanner" class="view-section hidden">
+            <div class="glass-card scanner-card">
+                <div class="video-container">
+                    <video id="camera-feed" autoplay playsinline></video>
+                    <img id="image-preview" class="hidden" alt="Preview Gambar">
+                    <div class="scan-overlay">
+                        <div class="scan-line"></div>
+                        <div class="scan-frame-corners"></div>
+                    </div>
+                </div>
+                <div class="scanner-controls">
+                    <p id="scanner-instruction">Posisikan wajah Anda di tengah layar...</p>
+                    <button id="btn-capture" class="btn-primary btn-pulse" disabled>Memindai...</button>
+                    <button id="btn-cancel-scan" class="btn-text">Batal</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- View 3: Loading Analysis -->
+        <section id="view-loading" class="view-section hidden">
+            <div class="glass-card text-center loading-card">
+                <div class="loader">
+                    <div class="loader-circle"></div>
+                    <div class="loader-circle"></div>
+                    <div class="loader-circle"></div>
+                </div>
+                <h2>Menganalisis Kulit Anda...</h2>
+                <p id="loading-text" class="fade-text">Mendeteksi tekstur kulit...</p>
+            </div>
+        </section>
+
+        <!-- View Warning -->
+        <section id="view-warning" class="view-section hidden">
+            <div class="glass-card text-center"
+                style="border-color: rgba(239, 68, 68, 0.5); background: rgba(254, 226, 226, 0.9);">
+                <div class="icon-wrapper"
+                    style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2);">⚠️</div>
+                <h1 style="color: #ef4444; font-size: 1.8rem;">Peringatan Medis</h1>
+                <p id="warning-text" style="color: #991b1b; font-weight: 500;">Kondisi kulit Anda tampaknya cukup parah
+                    dan butuh perawatan di dokter.</p>
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #7f1d1d; font-size: 1.3rem;">Apakah kamu akan
+                    konsultasi ke dokter?</h3>
+                <button id="btn-yes-doctor" class="btn-primary"
+                    style="background: #ef4444; box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.25);">Iya</button>
+            </div>
+        </section>
+
+        <!-- View 4: Results Dashboard -->
+        <section id="view-results" class="view-section hidden">
+            <div class="glass-card results-header">
+                <h2 class="result-title">Hasil Analisis</h2>
+                <div class="skin-type-badge">
+                    <span id="res-skin-icon">💧</span>
+                    <span id="res-skin-type">Kulit Kering</span>
+                </div>
+                <p id="res-skin-desc" class="skin-desc">Kulit Anda cenderung kekurangan kelembapan alami, sehingga
+                    membutuhkan hidrasi ekstra.</p>
+            </div>
+
+            <div class="recommendations-grid">
+                <!-- Card 1: Ingredients -->
+                <div class="glass-card rec-card">
+                    <div class="rec-icon">🧪</div>
+                    <h3>Kandungan Utama</h3>
+                    <ul id="res-ingredients" class="rec-list">
+                        <li>Centella Asiatica</li>
+                        <li>Hyaluronic Acid</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: Moisturizer -->
+                <div class="glass-card rec-card">
+                    <div class="rec-icon">🧴</div>
+                    <h3>Moisturizer Ideal</h3>
+                    <p id="res-moisturizer" class="rec-text">Krim pelembap bertekstur rich dengan Ceramide.</p>
+                </div>
+
+                <!-- Card 3: Sunscreen -->
+                <div class="glass-card rec-card">
+                    <div class="rec-icon">☀️</div>
+                    <h3>Tipe Sunscreen</h3>
+                    <p id="res-sunscreen" class="rec-text">Sunscreen cream dengan efek dewy/hydrating.</p>
+                </div>
+
+                <!-- Card 4: Saran Konsultasi -->
+                <div class="glass-card rec-card"
+                    style="grid-column: 1 / -1; background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2);">
+                    <div class="rec-icon" style="background: rgba(239, 68, 68, 0.1);">🩺</div>
+                    <h3 style="color: #fca5a5;">Saran Konsultasi (Jika Parah)</h3>
+                    <p id="res-consultation" class="rec-text">Peringatan medis.</p>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="btn-restart" class="btn-secondary">Pindai Ulang</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
